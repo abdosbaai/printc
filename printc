@@ -2,7 +2,7 @@
 
 #Version
 VERSION_PRINTC="printc 1.0.0"
-AUTHER="Abdessadek"
+AUTHER="@abdosbaai"
 
 # List of colors
 bold=$(tput bold)                
