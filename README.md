@@ -15,3 +15,9 @@ Author: @abdosbaai
 ```bash
 printc [option] [-b] --color=<color> <text>
 
+## Install
+
+```bash
+curl -o printc https://raw.githubusercontent.com/abdosbaai/printc/main/printc && sudo chmod u+x ./printc && sudo mv ./printc /usr/bin
+
+
