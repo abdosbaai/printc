@@ -14,6 +14,7 @@ Author: @abdosbaai
 
 ```bash
 printc [option] [-b] --color=<color> <text>
+```
 
 ## Install
 
