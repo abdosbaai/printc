@@ -1,0 +1,165 @@
+#!/bin/bash
+
+#Version
+VERSION_PRINTC="printc 1.0.0"
+AUTHER="Abdessadek"
+
+# List of colors
+bold=$(tput bold)                
+red=$(tput setaf 1)              
+green=$(tput setaf 2)            
+yellow=$(tput setaf 3)           
+blue=$(tput setaf 4)             
+magenta=$(tput setaf 5)          
+cyan=$(tput setaf 6)             
+white=$(tput setaf 7)            
+default_color=$(tput sgr0)
+
+# Helper function to handle color printing
+function handle_color {
+  local color=$1
+  local option=$2
+  local type_weigth=$4
+  local args=($@)
+  length_args=${#args[@]}
+  
+  if [[ $length_args -eq 4 && "$type_weigth" == "bold" ]]; then
+    case $color in
+      --color=red)
+	echo $option "$bold$red$3${default_color}"
+        ;;
+      --color=green)
+	echo $option "${green}${bold}$3${default_color}"
+	;;
+      --color=yellow)
+	echo $option "${yellow}${bold}$3${default_color}"
+        ;;
+      --color=blue)
+	echo $option "${blue}${bold}$3${default_color}"
+        ;;
+      --color=white)
+        echo $option "${white}${bold}$3${default_color}"
+        ;;
+      --color=cyan)
+        echo $option "${cyan}${bold}$3${default_color}"
+        ;;
+      --color=magenta)
+        echo $option "${magenta}${bold}$3${default_color}"
+        ;;
+      *)
+        echo " --color=<color-name>"
+        ;;
+    esac
+  elif [[ $length_args -eq 4 && "$type_weigth" == "normal" ]]; then 
+    case $color in
+      --color=red)
+        echo $option "$red$3${default_color}"
+        ;;
+      --color=green)
+        echo $option "${green}$3${default_color}"
+        ;;
+      --color=yellow)
+        echo $option "${yellow}$3${default_color}"
+        ;;
+      --color=blue)
+        echo $option "${blue}$3${default_color}"
+        ;;
+      --color=white)
+        echo $option "${white}$3${default_color}"
+        ;;
+      --color=cyan)
+        echo $option "${cyan}$3${default_color}"
+        ;;
+      --color=magenta)
+        echo $option "${magenta}$3${default_color}"
+        ;;
+      *)
+        echo " --color=<color-name>"
+        ;;
+    esac
+  elif [ $length_args -eq 2 ]; then
+    case $color in
+      --color=red)
+        echo "${red}$2${default_color}"
+        ;;
+      --color=green)
+        echo "${green}$2${default_color}"
+        ;;
+      --color=yellow)
+        echo "${yellow}$2${default_color}"
+        ;;
+      --color=blue)
+        echo "${blue}$2${default_color}"
+        ;;
+      --color=white)
+        echo "${white}$2${default_color}"
+        ;;
+      --color=cyan)
+        echo "${cyan}$2${default_color}"
+        ;;
+      --color=magenta)
+        echo "${magenta}$2${default_color}"
+        ;;
+      *)
+        echo " --color=<color-name>"
+        ;;
+    esac
+  fi
+ }
+# Default message
+
+message="try : printc --help | printc -h"
+
+
+# Help section
+if [[ $# -eq 1 || $# -eq 0 ]]; then
+  if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    echo "${blue}${bold}Definition${default_color}"
+    echo "${bold}printc${default_color} is a custom Bash script that provides a way to print text in different colors in the terminal."
+    echo "${blue}${bold}Usage:${default_color}"
+    echo "${green}printc${default_color} [option] [-b] --color=<color> <text>"
+    echo "${blue}${bold}Options:${default_color}"
+    echo "    -n: Do not output a trailing newline."
+    echo "    -E: Disable the interpretation of the following backslash-escaped characters."
+    echo "    -e: Enable interpretation of the following backslash-escaped characters in each ${green}String${default_color}"
+    echo "    -h | --help: show this page"
+    echo "    [-b]: This appears to be another optional parameter, which might indicate the use of bold text."
+    echo "    --color=<color>: This is a mandatory parameter that allows the user to specify the color they want to use. The available color options are red, green, blue, yellow, cyan, magenta, and white."
+    echo "${blue}${bold}Example Usage:${default_color}"
+    echo "printc --color=blue ${green}'Hello, world!'${default_color}"
+    echo "This command would print the text ${blue}'Hello, world!'${default_color} in blue color "
+  elif [ "$1" == "-v" ]; then
+    echo "$VERSION_PRINTC by $AUTHER"
+  else
+    echo "$message"
+  fi
+fi
+
+# Checking command-line arguments
+
+if [ $# -eq 4 ]; then
+  if [[ "$1" == "-n" && "$2" == "-b" ]]; then
+	handle_color $3 -n $4 "bold"
+  elif [[ "$1" == "-e" && "$2" == "-b" ]]; then
+	handle_color $3 -e $4 "bold"
+  elif [[ "$1" == "-E" && "$2" == "-b" ]]; then
+	handle_color $3 -E $4 "bold"
+  else
+    echo "$message"
+  fi
+fi
+if [ $# -eq 3 ]; then
+  if [ "$1" == "-n" ]; then
+	handle_color $2 -n $3 "normal"
+  elif [ "$1" == "-e" ]; then
+	handle_color $2 -e $3 "normal"
+  elif [ "$1" == "-E" ]; then
+	handle_color $2 -E $3 "normal"
+  else
+    echo "${cyan}${bold}Options${default_color}: [-n] [-e] [-E]"
+	echo -e "${green}${bold}Try to run${default_color}: \`printc -h\` for help.."
+  fi
+ fi
+if [ $# -eq 2 ]; then 
+	handle_color $1 $2
+fi
